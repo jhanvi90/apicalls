@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:apicalls/screens/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:apicalls/screens/HomePage.dart';
 
@@ -10,7 +11,7 @@ void main() {
 
 class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context) {
+  HttpClient createHttpClient(SecurityContext context) {
     return super.createHttpClient(context)..badCertificateCallback =
         (X509Certificate cert, String host, int port) => true;
   }
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage());
+        home: Login());
   }
 }
 
