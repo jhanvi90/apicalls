@@ -51,7 +51,7 @@ class DatabaseHelper {
         '$coltrips INTEGER)');
   }
 
-  // Fetch Operation: Get all Product objects from database
+  // Fetch Operation: Get all data objects from database
   Future<List<Map<String, dynamic>>> getProductMapList() async {
     Database db = await this.database;
 
@@ -71,7 +71,7 @@ class DatabaseHelper {
 
     return ProductList;
   }
-  // Insert a Product object to database
+  // Insert a data object to local database
   Future<int> insertProduct(Passenger Product) async {
 
     Database db = await this.database;
@@ -80,7 +80,7 @@ class DatabaseHelper {
   }
 
 
-  //  number of Product objects in database
+  //  number of  objects in database
   Future<int> getCount() async {
     Database db = await this.database;
     List<Map<String, dynamic>> x = await db.rawQuery('SELECT COUNT (*) from $ProductTable');
