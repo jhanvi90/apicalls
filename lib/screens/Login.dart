@@ -13,12 +13,12 @@ class _LoginState extends State<Login> {
   DeviceUnlock deviceUnlock;
 @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     deviceUnlock = DeviceUnlock();
-    pressedButton();
+    CheckBiometricCrendial();
   }
-  void pressedButton() async {
+  void CheckBiometricCrendial() async {
     var unlocked = false;
     try {
       unlocked = await deviceUnlock.request(
@@ -29,8 +29,6 @@ class _LoginState extends State<Login> {
     } on RequestInProgress {
       unlocked = true;
     }
-
-    print(unlocked);
     if (unlocked) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
 
