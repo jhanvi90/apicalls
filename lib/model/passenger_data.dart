@@ -63,18 +63,14 @@ class Passenger {
       };
 
   Passenger.fromMapObject(Map<String, dynamic> map) {
-
     this.name = map['name'];
     this.trips = map['trips'];
   }
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
-
     map['name'] = name;
     map['trips'] = trips;
-
-
     return map;
   }
 

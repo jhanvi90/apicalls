@@ -31,8 +31,6 @@ class _LoginState extends State<Login> {
     }
     if (unlocked) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
-
-
     }
   }
   @override

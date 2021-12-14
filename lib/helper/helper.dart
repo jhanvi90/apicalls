@@ -10,8 +10,7 @@ class DatabaseHelper {
   static DatabaseHelper _databaseHelper;    // Singleton DatabaseHelper
   static Database _database;                // Singleton Database
 
-  String ProductTable = 'Product_table123';
-  String colId = 'id';
+  String PasengerTable = 'PasengerTable';
   String colname = 'name';
   String coltrips = 'trips';
 
@@ -37,7 +36,7 @@ class DatabaseHelper {
   Future<Database> initializeDatabase() async {
     // Get the directory path for both Android and iOS to store database.
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path + 'jis.db';
+    String path = directory.path + 'passengerss.db';
 
     // Open/create the database at a given path
     var ProductsDatabase = await openDatabase(path, version: 1, onCreate: _createDb);
@@ -46,47 +45,34 @@ class DatabaseHelper {
 
   void _createDb(Database db, int newVersion) async {
 
-    await db.execute('CREATE TABLE $ProductTable('
+    await db.execute('CREATE TABLE $PasengerTable('
         ' $colname TEXT, '
         '$coltrips INTEGER)');
   }
 
   // Fetch Operation: Get all data objects from database
-  Future<List<Map<String, dynamic>>> getProductMapList() async {
+  Future<List<Map<String, dynamic>>> getPassengerMapList() async {
     Database db = await this.database;
-
-    var result = await db.query(ProductTable);
+    var result = await db.query(PasengerTable);
     return result;
   }
 
-  Future<List<Passenger>> getProductList() async {
-    var ProductMapList = await getProductMapList(); // Get 'Map List' from database
-    int count = ProductMapList.length; // Count the number of map entries in db table
-
+  Future<List<Passenger>> getPassengerList() async {
+    var PassengerMapList = await getPassengerMapList(); // Get 'Map List' from database
+    int count = PassengerMapList.length; // Count the number of map entries in db table
     List<Passenger> ProductList = [];
     for (int i = 0; i < count; i++) {
-      ProductList.add(Passenger.fromMapObject(ProductMapList[i]));
-
+      ProductList.add(Passenger.fromMapObject(PassengerMapList[i]));
     }
-
     return ProductList;
   }
   // Insert a data object to local database
-  Future<int> insertProduct(Passenger Product) async {
-
+  Future<int> insertPassenger(Passenger Product) async {
     Database db = await this.database;
-    var result = await db.insert(ProductTable, Product.toMap());
+    var result = await db.insert(PasengerTable, Product.toMap());
     return result;
   }
 
-
-  //  number of  objects in database
-  Future<int> getCount() async {
-    Database db = await this.database;
-    List<Map<String, dynamic>> x = await db.rawQuery('SELECT COUNT (*) from $ProductTable');
-    int result = Sqflite.firstIntValue(x);
-    return result;
-  }
 }
 
 
