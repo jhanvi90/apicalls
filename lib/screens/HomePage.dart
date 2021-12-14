@@ -24,22 +24,13 @@ class _HomePageState extends State<HomePage> {
 
   final RefreshController refreshController = RefreshController(initialRefresh: true);
 
-  // Future getd() async
-  // {
-  //   final Uri uri = Uri.parse("https://api.github.com/users/JakeWharton/repos?page=10&per_page=15");
-  //   print(uri);
-  //   final response = await http.get(uri);
-  //   List re=json.decode(response.body);
-  //   print(json.decode(response.body));
-  //   print(re.isEmpty);
-  // }
 
   Future<bool> getPassengerData({bool isRefresh = false}) async {
     if (isRefresh) {
       currentPage = 1;
     }
 
-    final Uri uri = Uri.parse("https://api.instantwebtools.net/v1/passenger?page=1913&size=10");
+    final Uri uri = Uri.parse("https://api.instantwebtools.net/v1/passenger?page=$currentPage&size=10");
     final response = await http.get(uri);
 
     if (response.statusCode == 200) {
