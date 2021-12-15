@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:apicalls/helper/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:apicalls/model/passenger_data.dart';
@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentPage = 1;
+  int currentPage = 1911;
 
   DatabaseHelper helper=DatabaseHelper();
    int totalPages;
@@ -26,15 +26,17 @@ class _HomePageState extends State<HomePage> {
 
 
   Future<bool> getPassengerData({bool isRefresh = false}) async {
-    if (isRefresh) {
-      currentPage = 1;
-    }
+
+    // if (isRefresh) {
+    //   currentPage = 1;
+    // }
 
     final Uri uri = Uri.parse("https://api.instantwebtools.net/v1/passenger?page=$currentPage&size=10");
     final response = await http.get(uri);
 
+    print(uri);
     if (response.statusCode == 200) {
-      final result = passengersDataFromJson(response.body);
+      final result = await passengersDataFromJson(response.body);
       print(result.data.isEmpty);
 
       if (isRefresh) {
@@ -44,22 +46,15 @@ class _HomePageState extends State<HomePage> {
           {
             return false;
           }
-        else{
-          if(result.data.isEmpty)
-            {
-              return false;
-            }
           else{
             passengers.addAll(result.data);
           }
-
-        }
-
       }
 
-      currentPage++;
+      currentPage=currentPage+1;
+      print(currentPage);
 
-      totalPages = result.totalPages;
+    //  totalPages = result.totalPages;
       for(var i=0;i<passengers.length;i++)
         {
          helper.insertPassenger(passengers[i]).whenComplete((){
@@ -106,6 +101,7 @@ class _HomePageState extends State<HomePage> {
                 return isOnline?
                 SmartRefresher(
                   controller: refreshController,
+                  footer: ClassicFooter(noDataText: "No data Found!!",),
                   enablePullUp: true,
                   onRefresh: () async {
                     final result = await getPassengerData(isRefresh: true);
@@ -121,8 +117,7 @@ class _HomePageState extends State<HomePage> {
                     if (result) {
                       refreshController.loadComplete();
                     } else {
-                      refreshController.loadFailed();
-
+                      refreshController.loadNoData();
                     }
                   },
                   child: ListView.separated(

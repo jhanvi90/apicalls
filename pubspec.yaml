@@ -32,6 +32,7 @@ dependencies:
   http: ^0.13.3
   pull_to_refresh: ^2.0.0
   sqflite: ^2.0.0+4
+  fluttertoast: ^8.0.8
   path_provider: any
   connectivity_widget: ^0.1.8
   local_auth: any
